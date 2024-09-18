@@ -1,33 +1,70 @@
 {
-    "properties": {
-      "replicas": {
-        "description": "Number of replicas",
-        "type": "integer"
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "replicaCount": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string"
+        }
       },
-      "image": {
-        "description": "Container Image",
-        "type": "string"
-      },
-      "version": {
-        "description": "Container image version",
-        "type": "string"
-      },
-      "service": {
-        "description": "Expose your application",
-        "type": "boolean"
+      "required": ["repository", "tag"]
+    },
+    "service": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     },
-    "order": [
-      "replicas",
-      "image",
-      "version",
-      "service"
-    ],
-    "required": [
-      "replicas",
-      "image",
-      "version"
-    ],
-    "title": "Values",
-    "type": "object"
+    "ingress": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "pathType": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
+}
